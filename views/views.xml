@@ -1,31 +1,221 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="nutrete.list">
-      <field name="name">nutrete list</field>
-      <field name="model">nutrete.nutrete</field>
+    <!-- CLIENTE -->
+    <record model="ir.ui.view" id="nutrete.cliente_tree">
+      <field name="name">nutrete cliente lista</field>
+      <field name="model">nutrete.cliente</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="name" string="Nombre" />
+          <field name="dni" string="DNI" />
+          <field name="foto" string="Foto" widget="image" />
+          <field name="motivo_consulta" string="Motivo de Consulta" />
+          <field name="historial" string="Historial" />
         </tree>
       </field>
     </record>
--->
+
+    <record model="ir.ui.view" id="nutrete.cliente_form">
+      <field name="name">nutrete cliente formulario</field>
+      <field name="model">nutrete.cliente</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de Cliente">
+          <sheet>
+            <group>
+              <field name="name" string="Nombre" required="1" />
+              <field name="dni" string="DNI" />
+              <field name="foto" string="Foto" />
+              <field name="motivo_consulta" string="Motivo de Consulta" />
+            </group>
+            <notebook>
+              <page string="Historial">
+                <field name="historial" widget="html" />
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- DIETISTA -->
+    <record model="ir.ui.view" id="nutrete.dietista_tree">
+      <field name="name">nutrete dietista arbol</field>
+      <field name="model">nutrete.dietista</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="dni" />
+          <field name="foto" />
+          <field name="especialidad" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="nutrete.dietista_form">
+      <field name="name">nutrete dietista formulario</field>
+      <field name="model">nutrete.dietista</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de Dietista">
+          <sheet>
+            <group>
+              <field name="name" string="Nombre" required="1" />
+              <field name="dni" string="DNI" />
+              <field name="foto" string="Foto" />
+              <field name="especialidad" string="Especialidad" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- NUTRICIONISTA-->
+
+    <record model="ir.ui.view" id="nutrete.nutricionista_tree">
+      <field name="name">nutrete nutricionista arbol</field>
+      <field name="model">nutrete.nutricionista</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="dni" />
+          <field name="foto" />
+          <field name="especialidad" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="nutrete.nutricionista_form">
+      <field name="name">nutrete nutricionista formulario</field>
+      <field name="model">nutrete.nutricionista</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de Nutricionista">
+          <sheet>
+            <group>
+              <field name="name" string="Nombre" required="1" />
+              <field name="dni" string="DNI" />
+              <field name="foto" string="Foto" />
+              <field name="especialidad" string="Especialidad" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- DIETA -->
+
+    <record model="ir.ui.view" id="nutrete.dieta_tree">
+      <field name="name">nutrete dieta arbol</field>
+      <field name="model">nutrete.dieta</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cliente_id" string="Cliente" />
+          <field name="nutricionista_id" string="Nutricionista" />
+          <field name="dietista_id" string="Dietista" />
+          <field name="revision_ids" string="Revisiones" widget="one2many_list" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="nutrete.dieta_form">
+      <field name="name">nutrete dieta formulario</field>
+      <field name="model">nutrete.dieta</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de Dieta">
+          <sheet>
+            <group>
+              <field name="cliente_id" string="Cliente" required="1" />
+              <field name="nutricionista_id" string="Nutricionista" />
+              <field name="dietista_id" string="Dietista" />
+              <field name="revision_ids" string="Revisiones" widget="one2many_list" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- REVISION -->
+    <record model="ir.ui.view" id="nutrete.revision_tree">
+      <field name="name">nutrete revision arbol</field>
+      <field name="model">nutrete.revision</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="fecha" />
+          <field name="hora" />
+          <field name="peso" />
+          <field name="comentarios" />
+          <field name="tipo_evolucion" />
+          <field name="dieta_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="nutrete.revision_form">
+      <field name="name">nutrete revision formulario</field>
+      <field name="model">nutrete.revision</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de Revisión">
+          <sheet>
+            <group>
+              <field name="fecha" string="Fecha" required="1" />
+              <field name="hora" string="Hora" />
+              <field name="peso" string="Peso" />
+              <field name="comentarios" string="Comentarios del paciente" />
+              <field name="tipo_evolucion" string="Tipo de Evolución" />
+              <field name="dieta_id" string="Dieta" required="1" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- TALLER -->
+    <record model="ir.ui.view" id="nutrete.taller_tree">
+      <field name="name">nutrete taller arbol</field>
+      <field name="model">nutrete.taller</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nutricionista_id" />
+          <field name="dietista_id" />
+          <field name="fecha" />
+          <field name="hora" />
+          <field name="tema" />
+          <field name="link_telematico" />
+          <field name="clientes_asistentes" />
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="nutrete.taller_form">
+      <field name="name">nutrete taller formulario</field>
+      <field name="model">nutrete.taller</field>
+      <field name="arch" type="xml">
+        <form string="Formulario de Taller">
+          <sheet>
+            <group>
+              <field name="nutricionista_id" string="Nutricionista" required="1" />
+              <field name="dietista_id" string="Dietista" />
+              <field name="fecha" string="Fecha" />
+              <field name="hora" string="Hora" />
+              <field name="tema" string="Tema" />
+              <field name="link_telematico" string="Link Telemático" />
+              <field name="clientes_asistentes" string="Clientes Asistentes" widget="many2many_tags" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="nutrete.action_window">
-      <field name="name">nutrete window</field>
-      <field name="res_model">nutrete.nutrete</field>
+
+    <record model="ir.actions.act_window" id="nutrete.cliente_window">
+      <field name="name">Clientes</field>
+      <field name="res_model">nutrete.cliente</field>
       <field name="view_mode">tree,form</field>
     </record>
--->
+
 
     <!-- server action to the one above -->
-<!--
+    <!--
     <record model="ir.actions.server" id="nutrete.action_server">
       <field name="name">nutrete server</field>
       <field name="model_id" ref="model_nutrete_nutrete"/>
@@ -41,20 +231,18 @@
 -->
 
     <!-- Top menu item -->
-<!--
-    <menuitem name="nutrete" id="nutrete.menu_root"/>
--->
+
+    <menuitem name="Nutrete" id="nutrete.menu_root" />
+
     <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="nutrete.menu_1" parent="nutrete.menu_root"/>
-    <menuitem name="Menu 2" id="nutrete.menu_2" parent="nutrete.menu_root"/>
--->
+
+    <menuitem name="Clientes" id="nutrete.menu_1" parent="nutrete.menu_root" />
+
     <!-- actions -->
-<!--
-    <menuitem name="List" id="nutrete.menu_1_list" parent="nutrete.menu_1"
-              action="nutrete.action_window"/>
-    <menuitem name="Server to list" id="nutrete" parent="nutrete.menu_2"
-              action="nutrete.action_server"/>
--->
+
+    <menuitem name="Gestor clientes" id="nutrete.menu_1_clientes_list" parent="nutrete.menu_1"
+      action="nutrete.cliente_window" />
+    
+
   </data>
 </odoo>
