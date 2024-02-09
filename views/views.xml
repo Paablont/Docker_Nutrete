@@ -207,9 +207,45 @@
 
     <!-- actions opening views on models -->
 
+    <!-- Action para la vista de lista y formulario de Cliente -->
     <record model="ir.actions.act_window" id="nutrete.cliente_window">
       <field name="name">Clientes</field>
       <field name="res_model">nutrete.cliente</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action para la vista de lista y formulario de Dietistas -->
+    <record model="ir.actions.act_window" id="nutrete.dietista_window">
+      <field name="name">Dietistas</field>
+      <field name="res_model">nutrete.dietista</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action para la vista de lista y formulario de Nutricionistas -->
+    <record model="ir.actions.act_window" id="nutrete.nutricionista_window">
+      <field name="name">Nutricionistas</field>
+      <field name="res_model">nutrete.nutricionista</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action para la vista de lista y formulario de Dietas -->
+    <record model="ir.actions.act_window" id="nutrete.dieta_window">
+      <field name="name">Dietas</field>
+      <field name="res_model">nutrete.dieta</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action para la vista de lista y formulario de Revisiones -->
+    <record model="ir.actions.act_window" id="nutrete.revision_window">
+      <field name="name">Revisiones</field>
+      <field name="res_model">nutrete.revision</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action para la vista de lista y formulario de Talleres -->
+    <record model="ir.actions.act_window" id="nutrete.taller_window">
+      <field name="name">Talleres</field>
+      <field name="res_model">nutrete.taller</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -230,19 +266,33 @@
     </record>
 -->
 
-    <!-- Top menu item -->
-
+    <!-- Menu Nutrete -->
     <menuitem name="Nutrete" id="nutrete.menu_root" />
 
-    <!-- menu categories -->
+    <!-- Menu categorias -->
 
     <menuitem name="Clientes" id="nutrete.menu_1" parent="nutrete.menu_root" />
-
+    <menuitem name="Dietistas" id="nutrete.menu_2" parent="nutrete.menu_root" />
+    <menuitem name="Nutricionistas" id="nutrete.menu_3" parent="nutrete.menu_root" />
+    <menuitem name="Dietas" id="nutrete.menu_4" parent="nutrete.menu_root" />
+    <menuitem name="Revisiones" id="nutrete.menu_5" parent="nutrete.menu_root" />
+    <menuitem name="Talleres" id="nutrete.menu_6" parent="nutrete.menu_root" />
     <!-- actions -->
 
     <menuitem name="Gestor clientes" id="nutrete.menu_1_clientes_list" parent="nutrete.menu_1"
       action="nutrete.cliente_window" />
-    
+    <menuitem name="Gestor dietistas" id="nutrete.menu_2_dietista_list" parent="nutrete.menu_2"
+      action="nutrete.dietista_window" />
+    <menuitem name="Gestor nutricionistas" id="nutrete.menu_3_nutricionista_list"
+      parent="nutrete.menu_3"
+      action="nutrete.nutricionista_window" />
+    <menuitem name="Gestor dietas" id="nutrete.menu_4_dieta_list" parent="nutrete.menu_4"
+      action="nutrete.dieta_window" />
+    <menuitem name="Gestor revisiones" id="nutrete.menu_5_revisiones_list" parent="nutrete.menu_5"
+      action="nutrete.revision_window" />
+    <menuitem name="Gestor talleres" id="nutrete.menu_6_talleres_list" parent="nutrete.menu_6"
+      action="nutrete.taller_window" />
+
 
   </data>
 </odoo>
