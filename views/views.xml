@@ -139,6 +139,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="fecha" />
+          <field name="proxima_revision"/>
           <field name="hora" />
           <field name="peso" />
           <field name="comentarios" />
@@ -156,6 +157,7 @@
           <sheet>
             <group>
               <field name="fecha" string="Fecha" required="1" />
+              <field name="proxima_revision" string="Proxima Revision"/>
               <field name="hora" string="Hora" />
               <field name="peso" string="Peso" />
               <field name="comentarios" string="Comentarios del paciente" />

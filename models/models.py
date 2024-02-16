@@ -35,6 +35,10 @@ class Cliente(models.Model):
         ('leer_etiquetado_alimentos', 'Aprender a leer etiquetado de alimentos'),
         ('otros', 'Otros'),
     ], string='Motivo de Consulta')
+    talleres_apuntados = fields.Many2many(comodel_name="nutrete.taller",
+                                           relation="taller_clientes",
+                                           colum1="cliente_id",
+                                           colum2="taller_id")
 
 class Dietista(models.Model):
     _name = 'nutrete.dietista'
@@ -82,7 +86,9 @@ class Revision(models.Model):
     _name = 'nutrete.revision'
     _description = 'Modelo para revisiones'
 
-    fecha = fields.Date(string='Fecha', default=fields.Date.today)
+    fecha = fields.Date(string='Fecha')
+    #Campo computado (Proxima revision, en 1 mes)
+    proxima_revision = fields.Date(string='Proxima revision', compute="_prox_revision", store=True)
     hora = fields.Float(string='Hora')    
     peso = fields.Float(string='Peso')
     comentarios = fields.Text(string='Comentarios del paciente')
@@ -93,6 +99,16 @@ class Revision(models.Model):
     ], string='Tipo de Evolución')
     #una dieta puede tener muchas revisiones
     dieta_id = fields.Many2one('nutrete.dieta', string='Dieta', required=True)
+
+    
+    def _prox_revision(self):
+        for rev in self:
+            if rev.fecha:
+                #Se suma 1 mes
+                proxima_rev = rev.fecha + relativedelta(monts=1)
+                rev.proxima_revision = proxima_rev.datetime()
+    
+
 
 class Taller(models.Model):
     _name = 'nutrete.taller'
@@ -107,4 +123,7 @@ class Taller(models.Model):
     tema = fields.Char(string='Tema')
     link_telematico = fields.Char(string='Link Telemático')
     #Un cliente puede tener muchos talleres, al igual que un taller puede tener muchos clientes
-    clientes_asistentes = fields.Many2many('nutrete.cliente', string='Clientes')
+    clientes_asistentes = fields.Many2many(comodel_name="nutrete.cliente",
+                                           relation="taller_clientes",
+                                           colum1="taller_id",
+                                           colum2="cliente_id")
