@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
+import datetime
+from odoo.exceptions import ValidationError
 
 # class nutrete(models.Model):
 #     _name = 'nutrete.nutrete'
@@ -82,6 +83,7 @@ class Dieta(models.Model):
     #Una dieta puede tener muchas revisiones
     revision_ids = fields.One2many('nutrete.revision', 'dieta_id', string='Revisiones')
 
+
 class Revision(models.Model):
     _name = 'nutrete.revision'
     _description = 'Modelo para revisiones'
@@ -100,13 +102,15 @@ class Revision(models.Model):
     #una dieta puede tener muchas revisiones
     dieta_id = fields.Many2one('nutrete.dieta', string='Dieta', required=True)
 
-    
+    @api.depends('fecha')
     def _prox_revision(self):
         for rev in self:
-            if rev.fecha:
-                #Se suma 1 mes
-                proxima_rev = rev.fecha + relativedelta(monts=1)
-                rev.proxima_revision = proxima_rev.datetime()
+            try:
+                if rev.fecha:
+                    rev.proxima_revision = rev.fecha + datetime.timedelta(days=31)
+            except Exception as e:
+                raise ValidationError(f"Error al calcular la próxima revisión: {e}")
+
     
 
 
