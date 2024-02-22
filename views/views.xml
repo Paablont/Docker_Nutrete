@@ -110,6 +110,7 @@
           <field name="cliente_id" string="Cliente" />
           <field name="nutricionista_id" string="Nutricionista" />
           <field name="dietista_id" string="Dietista" />
+          <field name="peso_promedio_revisiones" string="Peso promedio" />
           <field name="revision_ids" string="Revisiones" widget="one2many_list" />
         </tree>
       </field>
@@ -125,6 +126,7 @@
               <field name="cliente_id" string="Cliente" required="1" />
               <field name="nutricionista_id" string="Nutricionista" />
               <field name="dietista_id" string="Dietista" />
+              <field name="peso_promedio_revisiones" string="Peso promedio" />
               <field name="revision_ids" string="Revisiones" widget="one2many_list" />
             </group>
           </sheet>
@@ -138,6 +140,7 @@
       <field name="model">nutrete.revision</field>
       <field name="arch" type="xml">
         <tree>
+          <field name="cliente_id"></field>
           <field name="fecha" />
           <field name="proxima_revision"/>
           <field name="hora" />
@@ -145,6 +148,7 @@
           <field name="comentarios" />
           <field name="tipo_evolucion" />
           <field name="dieta_id" />
+
         </tree>
       </field>
     </record>
@@ -156,6 +160,7 @@
         <form string="Formulario de Revisión">
           <sheet>
             <group>
+              <field name="cliente_id" string="Cliente"></field>
               <field name="fecha" string="Fecha" required="1" />
               <field name="proxima_revision" string="Proxima Revision"/>
               <field name="hora" string="Hora" />

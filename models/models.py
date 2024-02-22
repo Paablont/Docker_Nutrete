@@ -40,6 +40,7 @@ class Cliente(models.Model):
                                            relation="taller_clientes",
                                            colum1="cliente_id",
                                            colum2="taller_id")
+    
 
 class Dietista(models.Model):
     _name = 'nutrete.dietista'
@@ -73,6 +74,8 @@ class Nutricionista(models.Model):
 class Dieta(models.Model):
     _name = 'nutrete.dieta'
     _description = 'Modelo para dietas'
+    #Campo computado para calcular el peso promedio de todas las revisiones que tiene esa dieta
+    peso_promedio_revisiones = fields.Float(string='Peso Promedio de Revisiones', compute='_compute_peso_promedio_revisiones')
 
     #Un cliente tiene muchas dietas
     cliente_id = fields.Many2one('nutrete.cliente', string='Cliente', required=True)
@@ -82,6 +85,18 @@ class Dieta(models.Model):
     dietista_id = fields.Many2one('nutrete.dietista', string='Dietista')
     #Una dieta puede tener muchas revisiones
     revision_ids = fields.One2many('nutrete.revision', 'dieta_id', string='Revisiones')
+    
+    @api.depends('revision_ids.peso')
+    def _compute_peso_promedio_revisiones(self):
+        for dieta in self:
+            try:
+                if dieta.revision_ids:
+                    peso_total = sum(rev.peso for rev in dieta.revision_ids)
+                    dieta.peso_promedio_revisiones = peso_total / len(dieta.revision_ids)
+                else:
+                    dieta.peso_promedio_revisiones = 0.0
+            except ZeroDivisionError:
+                dieta.peso_promedio_revisiones = 0.0
 
 
 class Revision(models.Model):
@@ -101,7 +116,9 @@ class Revision(models.Model):
     ], string='Tipo de Evolución')
     #una dieta puede tener muchas revisiones
     dieta_id = fields.Many2one('nutrete.dieta', string='Dieta', required=True)
-
+    #Una revision puede tener 1 cliente:
+    cliente_id = fields.Many2one('nutrete.cliente', string='Cliente', store=True)
+    
     @api.depends('fecha')
     def _prox_revision(self):
         for rev in self:
