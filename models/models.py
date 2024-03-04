@@ -1,22 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import re
 from odoo import models, fields, api
 import datetime
 from odoo.exceptions import ValidationError
-
-# class nutrete(models.Model):
-#     _name = 'nutrete.nutrete'
-#     _description = 'nutrete.nutrete'
-
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
 
 
 class Cliente(models.Model):
@@ -41,6 +28,15 @@ class Cliente(models.Model):
                                            colum1="cliente_id",
                                            colum2="taller_id")
     
+    #Restriccion para que el DNI tenga que ser válido y UNICO en SQL
+    @api.constrains('dni')
+    def _check_code(self):
+        regex = re.compile('^[0-9]{8}[a-z]', re.I)
+        for cl in self:
+            if not regex.match(cl.dni):
+                raise ValidationError('Formato de DNI incorrecto. Formato de DNI: 8 números y 1 letra')               
+            
+    _sql_constraints = [('dni_unique', 'unique(dni)', 'DNI ya existente.')]      
 
 class Dietista(models.Model):
     _name = 'nutrete.dietista'
@@ -57,6 +53,16 @@ class Dietista(models.Model):
         ('proteica', 'Dieta proteica'),
     ], string='Especialidad')
 
+    #Restriccion para que el DNI tenga que ser válido y UNICO en SQL
+    @api.constrains('dni')
+    def _check_code(self):
+        regex = re.compile('^[0-9]{8}[a-z]', re.I)
+        for diet in self:
+            if not regex.match(diet.dni):
+                raise ValidationError('Formato de DNI incorrecto. Formato de DNI: 8 números y 1 letra')               
+            
+    _sql_constraints = [('dni_unique', 'unique(dni)', 'DNI ya existente.')] 
+
 class Nutricionista(models.Model):
     _name = 'nutrete.nutricionista'
     _description = 'Modelo para nutricionistas'
@@ -70,6 +76,16 @@ class Nutricionista(models.Model):
         ('clinica', 'Nutrición clínica'),
         ('otros', 'Otros'),
     ], string='Especialidad')
+
+    #Restriccion para que el DNI tenga que ser válido y UNICO en SQL
+    @api.constrains('dni')
+    def _check_code(self):
+        regex = re.compile('^[0-9]{8}[a-z]', re.I)
+        for diet in self:
+            if not regex.match(diet.dni):
+                raise ValidationError('Formato de DNI incorrecto. Formato de DNI: 8 números y 1 letra')               
+            
+    _sql_constraints = [('dni_unique', 'unique(dni)', 'DNI ya existente.')] 
 
 class Dieta(models.Model):
     _name = 'nutrete.dieta'
@@ -127,6 +143,13 @@ class Revision(models.Model):
                     rev.proxima_revision = rev.fecha + datetime.timedelta(days=31)
             except Exception as e:
                 raise ValidationError(f"Error al calcular la próxima revisión: {e}")
+            
+    #Restriccion para no poder poner peso negativo
+    @api.constrains('peso')
+    def _check_peso(self):
+        for rev in self:
+            if rev.peso < 0:
+                raise ValidationError("El peso no puede ser negativo.")
 
     
 
