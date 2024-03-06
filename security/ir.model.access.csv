@@ -1,7 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_nutrete_clientes,nutrete.cliente_window,model_nutrete_cliente,base.group_user,1,1,1,0
-access_nutrete_dietista,nutrete.dietista_window,model_nutrete_dietista,base.group_user,1,1,1,0
-access_nutrete_nutricionista,nutrete.nutricionista_window,model_nutrete_nutricionista,base.group_user,1,1,1,0
-access_nutrete_dieta,nutrete.dieta_window,model_nutrete_dieta,base.group_user,1,1,1,0
-access_nutrete_revisiones,nutrete.revision_window,model_nutrete_revision,base.group_user,1,1,1,0
-access_nutrete_talleres,nutrete.taller_window,model_nutrete_taller,base.group_user,1,1,1,0
+access_nutrete_clientes,nutrete.cliente_window,model_nutrete_cliente,base.group_user,1,1,1,1
+access_nutrete_dietista,nutrete.dietista_window,model_nutrete_dietista,base.group_user,1,1,1,1
+access_nutrete_nutricionista,nutrete.nutricionista_window,model_nutrete_nutricionista,base.group_user,1,1,1,1
+access_nutrete_dieta,nutrete.dieta_window,model_nutrete_dieta,base.group_user,1,1,1,1
+access_nutrete_revisiones,nutrete.revision_window,model_nutrete_revision,base.group_user,1,1,1,1
+access_nutrete_talleres,nutrete.taller_window,model_nutrete_taller,base.group_user,1,1,1,1
