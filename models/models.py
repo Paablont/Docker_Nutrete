@@ -10,12 +10,10 @@ class developer(models.Model):
     _inherit = 'res.partner'
 
 class Cliente(models.Model):
-    _name = 'nutrete.cliente'
-    _description = 'Modelo para clientes'
-
-    name = fields.Char(string='Nombre', required=True)
-    dni = fields.Char(string='DNI')
-    foto = fields.Image(string='Foto',max_width=200, max_height=200)
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+   
+    dni = fields.Char(string='DNI')    
     historial = fields.Text(string='Historial')
     motivo_consulta = fields.Selection([
         ('cambiar_alimentacion', 'Cambiar hábitos alimenticios'),
@@ -34,20 +32,19 @@ class Cliente(models.Model):
     #Restriccion para que el DNI tenga que ser válido y UNICO en SQL
     @api.constrains('dni')
     def _check_code(self):
-        regex = re.compile('^[0-9]{8}[a-z]', re.I)
-        for cl in self:
+       regex = re.compile('^[0-9]{8}[a-z]', re.I)
+       for cl in self:
             if not regex.match(cl.dni):
                 raise ValidationError('Formato de DNI incorrecto. Formato de DNI: 8 números y 1 letra')               
             
     _sql_constraints = [('dni_unique', 'unique(dni)', 'DNI ya existente.')]      
 
 class Dietista(models.Model):
-    _name = 'nutrete.dietista'
-    _description = 'Modelo para dietistas'
-
-    name = fields.Char(string='Nombre', required=True)
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+    
     dni = fields.Char(string='DNI')
-    foto = fields.Image(string='Foto',max_width=200, max_height=200)
+    
     especialidad = fields.Selection([
         ('vegetariana', 'Dieta vegetariana'),
         ('paleo', 'Dieta paleo'),
@@ -67,12 +64,11 @@ class Dietista(models.Model):
     _sql_constraints = [('dni_unique', 'unique(dni)', 'DNI ya existente.')] 
 
 class Nutricionista(models.Model):
-    _name = 'nutrete.nutricionista'
-    _description = 'Modelo para nutricionistas'
+    _name = 'res.partner'
+    _inherit = 'res.partner'
 
-    name = fields.Char(string='Nombre', required=True)
+    
     dni = fields.Char(string='DNI')
-    foto = fields.Image(string='Foto',max_width=200, max_height=200)
     especialidad = fields.Selection([
         ('deportiva', 'Nutrición deportiva'),
         ('pediatrica', 'Nutrición pediátrica'),
@@ -97,11 +93,11 @@ class Dieta(models.Model):
     peso_promedio_revisiones = fields.Float(string='Peso Promedio de Revisiones', compute='_compute_peso_promedio_revisiones')
 
     #Un cliente tiene muchas dietas
-    cliente_id = fields.Many2one('nutrete.cliente', string='Cliente', required=True)
+    cliente_id = fields.Many2one('res.partner', string='Cliente', required=True)
     #un nutricionista puede tener muchas dietas para los clientes
     nutricionista_id = fields.Many2one('nutrete.nutricionista', string='Nutricionista')
     #un dietista tiene muchas dietas
-    dietista_id = fields.Many2one('nutrete.dietista', string='Dietista')
+    dietista_id = fields.Many2one('res.partner', string='Dietista')
     #Una dieta puede tener muchas revisiones
     revision_ids = fields.One2many('nutrete.revision', 'dieta_id', string='Revisiones')
     
@@ -136,7 +132,7 @@ class Revision(models.Model):
     #una dieta puede tener muchas revisiones
     dieta_id = fields.Many2one('nutrete.dieta', string='Dieta', required=True)
     #Una revision puede tener 1 cliente:
-    cliente_id = fields.Many2one('nutrete.cliente', string='Cliente', store=True)
+    cliente_id = fields.Many2one('res.partner', string='Cliente', store=True)
     
     @api.depends('fecha')
     def _prox_revision(self):
@@ -170,7 +166,7 @@ class Taller(models.Model):
     tema = fields.Char(string='Tema')
     link_telematico = fields.Char(string='Link Telemático')
     #Un cliente puede tener muchos talleres, al igual que un taller puede tener muchos clientes
-    clientes_asistentes = fields.Many2many(comodel_name="nutrete.cliente",
+    clientes_asistentes = fields.Many2many(comodel_name="res.partner",
                                            relation="taller_clientes",
                                            colum1="taller_id",
                                            colum2="cliente_id")

@@ -1,102 +1,64 @@
 <odoo>
   <data>
     <!-- CLIENTE -->
-    <record model="ir.ui.view" id="nutrete.cliente_tree">
-      <field name="name">nutrete cliente lista</field>
-      <field name="model">nutrete.cliente</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name" string="Nombre" />
-          <field name="dni" string="DNI" />
-          <field name="foto" string="Foto" widget="image" />
-          <field name="motivo_consulta" string="Motivo de Consulta" />
-          <field name="historial" string="Historial" />
-        </tree>
-      </field>
-    </record>
-
     <record model="ir.ui.view" id="nutrete.cliente_form">
       <field name="name">nutrete cliente formulario</field>
-      <field name="model">nutrete.cliente</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"></field>
+      <field name="mode">primary</field>
       <field name="arch" type="xml">
-        <form string="Formulario de Cliente">
-          <sheet>
+        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+          <page name="Clientes" string="Clientes">
             <group>
-              <field name="name" string="Nombre" required="1" />
-              <field name="dni" string="DNI" />
-              <field name="foto" string="Foto" />
-              <field name="motivo_consulta" string="Motivo de Consulta" />
+              <group>
+                <field name="dni" string="DNI" />              
+                <field name="motivo_consulta" string="Motivo de Consulta" />
+              </group>
             </group>
-            <notebook>
-              <page string="Historial">
-                <field name="historial" widget="html" />
-              </page>
-            </notebook>
-          </sheet>
-        </form>
+          </page>
+        </xpath>
       </field>
     </record>
 
     <!-- DIETISTA -->
-    <record model="ir.ui.view" id="nutrete.dietista_tree">
-      <field name="name">nutrete dietista arbol</field>
-      <field name="model">nutrete.dietista</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name" />
-          <field name="dni" />
-          <field name="foto" />
-          <field name="especialidad" />
-        </tree>
-      </field>
-    </record>
 
     <record model="ir.ui.view" id="nutrete.dietista_form">
       <field name="name">nutrete dietista formulario</field>
-      <field name="model">nutrete.dietista</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"></field>
+      <field name="mode">primary</field>
       <field name="arch" type="xml">
-        <form string="Formulario de Dietista">
-          <sheet>
+        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+          <page name="Dietistas" string="Dietistas">
             <group>
-              <field name="name" string="Nombre" required="1" />
-              <field name="dni" string="DNI" />
-              <field name="foto" string="Foto" />
-              <field name="especialidad" string="Especialidad" />
+              <group>
+                <field name="dni" />
+                <field name="especialidad" />
+              </group>
             </group>
-          </sheet>
-        </form>
+          </page>
+        </xpath>
       </field>
-    </record>
+    </record>    
 
     <!-- NUTRICIONISTA-->
 
-    <record model="ir.ui.view" id="nutrete.nutricionista_tree">
-      <field name="name">nutrete nutricionista arbol</field>
-      <field name="model">nutrete.nutricionista</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name" />
-          <field name="dni" />
-          <field name="foto" />
-          <field name="especialidad" />
-        </tree>
-      </field>
-    </record>
-
     <record model="ir.ui.view" id="nutrete.nutricionista_form">
-      <field name="name">nutrete nutricionista formulario</field>
-      <field name="model">nutrete.nutricionista</field>
+      <field name="name">nutrete dietista formulario</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"></field>
+      <field name="mode">primary</field>
       <field name="arch" type="xml">
-        <form string="Formulario de Nutricionista">
-          <sheet>
+        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+          <page name="Nutricionistas" string="Nutricionistas">
             <group>
-              <field name="name" string="Nombre" required="1" />
-              <field name="dni" string="DNI" />
-              <field name="foto" string="Foto" />
-              <field name="especialidad" string="Especialidad" />
+              <group>
+                <field name="dni" />
+                <field name="especialidad" />
+              </group>
             </group>
-          </sheet>
-        </form>
+          </page>
+        </xpath>
       </field>
     </record>
 
@@ -220,25 +182,68 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    
     <!-- Action para la vista de lista y formulario de Cliente -->
     <record model="ir.actions.act_window" id="nutrete.cliente_window">
       <field name="name">Clientes</field>
-      <field name="res_model">nutrete.cliente</field>
+      <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window.view" id="nutrete.action_cliente_tree">
+      <field name="sequence" eval="1"></field>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="base.view_partner_tree"></field>
+      <field name="act_window_id" ref="nutrete.cliente_window"></field>
+    </record>
+    
+    <record model="ir.actions.act_window.view" id="nutrete.action_cliente_form">
+      <field name="sequence" eval="2"></field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="nutrete.cliente_form"></field>
+      <field name="act_window_id" ref="nutrete.cliente_window"></field>
+    </record>
+    
     <!-- Action para la vista de lista y formulario de Dietistas -->
     <record model="ir.actions.act_window" id="nutrete.dietista_window">
       <field name="name">Dietistas</field>
-      <field name="res_model">nutrete.dietista</field>
+      <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="nutrete.action_dietista_tree">
+      <field name="sequence" eval="1"></field>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="base.view_partner_tree"></field>
+      <field name="act_window_id" ref="nutrete.dietista_window"></field>
+    </record>
+    
+    <record model="ir.actions.act_window.view" id="nutrete.action_dietista_form">
+      <field name="sequence" eval="2"></field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="nutrete.dietista_form"></field>
+      <field name="act_window_id" ref="nutrete.dietista_window"></field>
     </record>
 
     <!-- Action para la vista de lista y formulario de Nutricionistas -->
     <record model="ir.actions.act_window" id="nutrete.nutricionista_window">
       <field name="name">Nutricionistas</field>
-      <field name="res_model">nutrete.nutricionista</field>
+      <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="nutrete.action_nutricionista_tree">
+      <field name="sequence" eval="1"></field>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="base.view_partner_tree"></field>
+      <field name="act_window_id" ref="nutrete.nutricionista_window"></field>
+    </record>
+    
+    <record model="ir.actions.act_window.view" id="nutrete.action_nutricionista_form">
+      <field name="sequence" eval="2"></field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="nutrete.nutricionista_form"></field>
+      <field name="act_window_id" ref="nutrete.nutricionista_window"></field>
     </record>
 
     <!-- Action para la vista de lista y formulario de Dietas -->
