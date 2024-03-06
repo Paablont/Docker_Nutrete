@@ -5,6 +5,9 @@ from odoo import models, fields, api
 import datetime
 from odoo.exceptions import ValidationError
 
+class developer(models.Model):
+    _name = 'res.partner'
+    _inherit = 'res.partner'
 
 class Cliente(models.Model):
     _name = 'nutrete.cliente'
