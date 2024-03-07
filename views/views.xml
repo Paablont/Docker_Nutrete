@@ -174,15 +174,7 @@
     </record>
 
 
-    <!-- actions opening views on models -->
-
-    <record model="ir.actions.act_window" id="nutrete.action_developer_window">
-      <field name="name">manage project window</field>
-      <field name="res_model">res.partner</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-
-    
+    <!-- actions opening views on models -->    
     <!-- Action para la vista de lista y formulario de Cliente -->
     <record model="ir.actions.act_window" id="nutrete.cliente_window">
       <field name="name">Clientes</field>
@@ -295,11 +287,10 @@
     <menuitem name="Dietas" id="nutrete.menu_4" parent="nutrete.menu_root" />
     <menuitem name="Revisiones" id="nutrete.menu_5" parent="nutrete.menu_root" />
     <menuitem name="Talleres" id="nutrete.menu_6" parent="nutrete.menu_root" />
-    <menuitem name="Devs" id="nutrete.menu_7" parent="nutrete.menu_root" />
+    
 
     <!-- actions -->
-    <menuitem name="Developers" id="nutrete.menu_7_devs_list" parent="nutrete.menu_7"
-    action="nutrete.action_developer_window"/>
+    
     <menuitem name="Gestor clientes" id="nutrete.menu_1_clientes_list" parent="nutrete.menu_1"
       action="nutrete.cliente_window" />
     <menuitem name="Gestor dietistas" id="nutrete.menu_2_dietista_list" parent="nutrete.menu_2"

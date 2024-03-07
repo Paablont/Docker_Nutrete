@@ -5,9 +5,7 @@ from odoo import models, fields, api
 import datetime
 from odoo.exceptions import ValidationError
 
-class developer(models.Model):
-    _name = 'res.partner'
-    _inherit = 'res.partner'
+
 
 class Cliente(models.Model):
     _name = 'res.partner'
@@ -95,7 +93,7 @@ class Dieta(models.Model):
     #Un cliente tiene muchas dietas
     cliente_id = fields.Many2one('res.partner', string='Cliente', required=True)
     #un nutricionista puede tener muchas dietas para los clientes
-    nutricionista_id = fields.Many2one('nutrete.nutricionista', string='Nutricionista')
+    nutricionista_id = fields.Many2one('res.partner', string='Nutricionista')
     #un dietista tiene muchas dietas
     dietista_id = fields.Many2one('res.partner', string='Dietista')
     #Una dieta puede tener muchas revisiones
@@ -158,9 +156,9 @@ class Taller(models.Model):
     _description = 'Modelo para talleres'
 
     #Un nutricionista puede tener muchos talleres
-    nutricionista_id = fields.Many2one('nutrete.nutricionista', string='Nutricionista', required=True)
+    nutricionista_id = fields.Many2one('res.partner', string='Nutricionista', required=True)
     #lo mismo con un dietista
-    dietista_id = fields.Many2one('nutrete.dietista', string='Dietista')
+    dietista_id = fields.Many2one('res.partner', string='Dietista')
     fecha = fields.Date(string='Fecha')
     hora = fields.Float(string='Hora')
     tema = fields.Char(string='Tema')
